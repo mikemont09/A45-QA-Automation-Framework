@@ -20,7 +20,7 @@ public class BaseTest {
     public static void launchBrowser() {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
-        WebDriver driver = new ChromeDriver(options);
+        driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
     }
     @AfterMethod
@@ -37,7 +37,7 @@ public class BaseTest {
         emailField.sendKeys(email);
     }
     public static void providePassword(String password) {
-        WebElement passwordField = driver.findElement(By.cssSelector("[type='password'}"));
+        WebElement passwordField = driver.findElement(By.cssSelector("[type='password']"));
         passwordField.clear();
         passwordField.sendKeys(password);
     }
