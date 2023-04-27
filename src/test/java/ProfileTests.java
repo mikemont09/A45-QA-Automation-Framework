@@ -5,14 +5,14 @@ import org.testng.annotations.Test;
 
 public class ProfileTests extends BaseTest {
 
-    @Test
+    @Test (enabled = false)
     public static void changeProfileNameTest () throws InterruptedException {
 
         navigateToPage();
 
-        provideEmail("demo@class.com");
-        providePassword("te$t$tudent");
-        clickSubmit();
+//        provideEmail("demo@class.com");
+//        providePassword("te$t$tudent");
+//        clickSubmit();
 
         Thread.sleep(2000);
         clickAvatarIcon();

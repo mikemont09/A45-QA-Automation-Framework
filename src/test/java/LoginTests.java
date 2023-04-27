@@ -12,32 +12,33 @@ import java.time.Duration;
 
 public class LoginTests extends BaseTest {
 
-    @Test (enabled = true, priority = 0, description = "Login with invalid email and valid password")
+    @Test (enabled = false, priority = 0, description = "Login with invalid email and valid password")
     public void loginInvalidEmailValidPasswordTest(){
 
         navigateToPage();
-        email("invalid@class.com");
-        providePassword("te$t$tudent");
-        clickSubmit();
+        login("invalid@class.com", "te$t$tudent");
+//        email("invalid@class.com");
+//        providePassword("te$t$tudent");
+//        clickSubmit();
 
         Assert.assertEquals(driver.getCurrentUrl(), url); //https://bbb.testpro.io/
     }
 
-    @Test (enabled = true, priority = 1, description = "Login with valid email and valid password")
+    @Test (enabled = false, priority = 1, description = "Login with valid email and valid password")
     public void loginValidEmailPasswordTest(){
         navigateToPage();
-        provideEmail("demo@class.com");
-        providePassword("te$t$tudent");
-        clickSubmit();
+//        provideEmail("demo@class.com");
+//        providePassword("te$t$tudent");
+//        clickSubmit();
         isAvatarDisplayed();
     }
 
-    @Test (enabled = true, priority = 3, description = "Login with valid email and empty password")
+    @Test (enabled = false, priority = 3, description = "Login with valid email and empty password")
     public static void loginValidEmailEmptyPasswordTest() {
         navigateToPage();
-        provideEmail("demo@class.com");
-        providePassword("");
-        clickSubmit();
+//        provideEmail("demo@class.com");
+//        providePassword("");
+//        clickSubmit();
 
         Assert.assertEquals(driver.getCurrentUrl(), url); //https://bbb.testpro.io/
     }

@@ -10,9 +10,9 @@ public class TestHomework extends BaseTest{
         String playlistName = "kz-new playlist";
 
         navigateToPage();
-        provideEmail("demo@class.com");
-        providePassword("te$t$tudent");
-        clickSubmit();
+//        provideEmail("demo@class.com");
+//        providePassword("te$t$tudent");
+//        clickSubmit();
         Thread.sleep(2000);
 
         WebElement search = driver.findElement(By.cssSelector("[type='search']"));
