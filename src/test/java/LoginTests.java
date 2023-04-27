@@ -16,7 +16,7 @@ public class LoginTests extends BaseTest {
     public void loginInvalidEmailValidPasswordTest(){
 
         navigateToPage();
-        provideEmail("invalid@class.com");
+        email("invalid@class.com");
         providePassword("te$t$tudent");
         clickSubmit();
 
