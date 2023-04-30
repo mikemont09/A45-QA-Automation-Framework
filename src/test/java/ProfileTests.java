@@ -7,13 +7,12 @@ import org.testng.annotations.Test;
 public class ProfileTests extends BaseTest {
 
     @Test
-    public static void changeProfileNameTest () throws InterruptedException {
+    public static void changeProfileNameTest () {
 
         provideEmail("demo@class.com");
         providePassword("te$t$tudent");
         clickSubmit();
 
-        //Thread.sleep(2000);
         WebElement AvatarIcon = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img.avatar")));
         clickAvatarIcon();
 
