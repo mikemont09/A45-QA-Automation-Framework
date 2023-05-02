@@ -43,14 +43,15 @@ public class BaseTest {
         options.addArguments("--remote-allow-origins=*");
 
         driver = new ChromeDriver(options);
-//        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));//lets uncomment this
+        driver.manage().window().maximize();//lets add this to maximize the browser
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         actions = new Actions(driver);
         url = BaseURL;
         navigateToPage();
     }
 
-    @AfterMethod(enabled = false)
+    @AfterMethod//(enabled = false) lets remove the enabled=false to quit the browser
     public void closeBrowser() {
         driver.quit();
     }
@@ -75,8 +76,13 @@ public class BaseTest {
         WebElement submit = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("button[type='submit']")));
         submit.click();
     }
+    public void login() {
+        provideEmail("monty133@gmail.com");
+        providePassword("te$t$tudent");
+        clickSubmit();
+    }
 
-    public static void clickSaveButton() {
+    public static void clickSaveButton() {//this line got commented accidentally
         WebElement saveButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button.btn-submit")));
         saveButton.click();
     }

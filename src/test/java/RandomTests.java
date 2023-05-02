@@ -9,8 +9,8 @@ public class RandomTests extends BaseTest {
         clickSubmit();
         doubleClickChoosePlaylist();
 
-//        hoverPlay();
-//        contextClickFirstSong();
+       hoverPlay();
+       contextClickFirstSong();
     }
 
     @Test

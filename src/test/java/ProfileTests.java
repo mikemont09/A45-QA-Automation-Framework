@@ -19,7 +19,7 @@ public class ProfileTests extends BaseTest {
 
         provideCurrentPassword("te$t$tudent");
         provideProfileName(randomName);
-        clickSaveButton();
+        //clickSaveButton();
 
         Thread.sleep(2000);
         WebElement actualProfileName = driver.findElement(By.cssSelector("a.view-profile>span"));
