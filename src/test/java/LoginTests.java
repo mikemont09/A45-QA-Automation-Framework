@@ -19,10 +19,10 @@ public class LoginTests extends BaseTest {
 
     @Test (enabled = true, priority = 1, description = "Login with valid email and valid password")
     public void loginValidEmailPasswordTest(){
-        provideEmail("demo@class.com");
-        providePassword("te$t$tudent");
-        clickSubmit();
-        isAvatarDisplayed();
+        LoginPage loginPage = new LoginPage(driver);
+        HomePage homePage = new HomePage(driver);
+        loginPage.provideEmail("monty133@gmail.com").providePassword("te$t$tudent").clickSubmit();
+        Assert.assertTrue(homePage.getUserAvatar().isDisplayed());
     }
 
     @Test (enabled = true, priority = 3, description = "Login with valid email and empty password")
