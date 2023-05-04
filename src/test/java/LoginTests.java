@@ -27,7 +27,6 @@ public class LoginTests extends BaseTest {
         loginPage.providePassword("te$t$tudent");
         loginPage.clickSubmitBtn();
 
-        WebElement avatarIcon = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("img.avatar")));
         Assert.assertTrue(homePage.getUserAvatar().isDisplayed());
     }
 

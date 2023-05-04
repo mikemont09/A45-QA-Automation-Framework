@@ -41,8 +41,8 @@ public class BaseTest {
         //      Added ChromeOptions argument below to fix websocket error
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
-
         driver = new ChromeDriver(options);
+        driver.manage().window().maximize();
 //        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         actions = new Actions(driver);
@@ -50,8 +50,8 @@ public class BaseTest {
         navigateToPage();
     }
 
-    @AfterMethod(enabled = false)
-    public void closeBrowser() {
+    @AfterMethod(enabled = true)
+    public static void closeBrowser() {
         driver.quit();
     }
 
