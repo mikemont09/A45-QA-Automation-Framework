@@ -10,9 +10,9 @@ import java.time.Duration;
 public class LoginPage extends BasePage {
 
     //locators
-    By submitButtonLocator = By.cssSelector("button[type='submit']");
-    By emailField = By.cssSelector("input[type='email']");
-    By passwordField = By.cssSelector("input[type='password']");
+    private By submitButtonLocator = By.cssSelector("button[type='submit']");
+    private By emailField = By.cssSelector("input[type='email']");
+    private By passwordField = By.cssSelector("input[type='password']");
 
     //constructor
     public LoginPage( WebDriver givenDriver) {
