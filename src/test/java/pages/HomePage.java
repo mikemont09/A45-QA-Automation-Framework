@@ -15,7 +15,7 @@ public class HomePage extends BasePage {
     public HomePage( WebDriver givenDriver) {
         super(givenDriver);
     }
-    private WebElement getUserAvatar () {
+    public WebElement getUserAvatar () {
         return findElement(userAvatarIcon);
     }
 }
