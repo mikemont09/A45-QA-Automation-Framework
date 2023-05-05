@@ -17,12 +17,12 @@ public class LoginTests extends BaseTest {
         Assert.assertEquals(driver.getCurrentUrl(), url); // https://bbb.testpro.io/
     }
 
-    @Test (enabled = true, priority = 1, description = "Login with valid email and valid password")
+    @Test
     public void loginValidEmailPasswordTest(){
         LoginPage loginPage = new LoginPage(driver);
         HomePage homePage = new HomePage(driver);
         loginPage.provideEmail("monty133@gmail.com").providePassword("te$t$tudent").clickSubmit();
-        //Assert.assertTrue(homePage.getUserAvatar().isDisplayed());
+        Assert.assertTrue(homePage.getUserAvatar().isDisplayed());
     }
 
     @Test (enabled = true, priority = 3, description = "Login with valid email and empty password")
