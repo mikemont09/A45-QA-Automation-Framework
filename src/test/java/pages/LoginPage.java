@@ -11,11 +11,11 @@ public class LoginPage extends BasePage {
     }
     //WebElements
     @FindBy(css = "[type='email']")
-    WebElement emailField;
+    private WebElement emailField;
     @FindBy(css = "[type='password']")
-    WebElement passwordField;
+    private WebElement passwordField;
     @FindBy(css = "[type='submit']")
-    WebElement submitBtn;
+    private WebElement submitBtn;
     public LoginPage provideEmail(String email) {
        emailField.sendKeys(email);
        return this;
