@@ -8,12 +8,14 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.time.Duration;
 import java.util.List;
 import java.util.UUID;
@@ -39,7 +41,7 @@ public class BaseTest {
         };
     }
     @BeforeMethod
-    public static void launchBrowser(String browser) {
+    public static void launchBrowser(String browser) throws MalformedURLException {
         //      Added ChromeOptions argument below to fix websocket error
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
@@ -53,7 +55,7 @@ public class BaseTest {
     }
     private static WebDriver pickBrowser(String browser) throws MalformedURLException {
         DesiredCapabilities caps = new DesiredCapabilities();
-        String gridURL = ""
+        String gridURL = " http://192.168.1.218:4444";
         switch (browser){
             case "firefox":
                 WebDriverManager.firefoxdriver().setup();
@@ -61,6 +63,15 @@ public class BaseTest {
             case "MicrosoftEdge":
                 WebDriverManager.edgedriver().setup();
                 return driver = new EdgeDriver();
+            case "grid-edge":
+                caps.setCapability("browserName", "Microsoft Edge");
+                return driver = new RemoteWebDriver(URI.create(gridURL).toURL(),caps);
+            case "grid-firefox":
+                caps.setCapability("browserName", "firefox");
+                return driver = new RemoteWebDriver(URI.create(gridURL).toURL(),caps);
+            case "grid-chrome":
+                caps.setCapability("browserName", "chrome");
+                return driver = new RemoteWebDriver(URI.create(gridURL).toURL(),caps);
             default:
                 return driver = new ChromeDriver();
         }
