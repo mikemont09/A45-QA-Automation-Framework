@@ -51,6 +51,10 @@ public class LoginTests extends BaseTest {
         loginPage.clickSubmit();
 
         Assert.assertTrue(homePage.getUserAvatar().isDisplayed());
-
+    }
+    @Test
+    public void loginEmptyEmailEmptyPasswordTest() {
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login();
     }
 }
