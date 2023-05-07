@@ -49,13 +49,12 @@ public class BaseTest {
         options.addArguments("--remote-allow-origins=*");
 
         driver = pickBrowser(browser);
-        driver.get(BaseURL);
-        driver = new ChromeDriver(options);
-//        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         actions = new Actions(driver);
-        navigateToPage();
+        driver.get(BaseURL);
     }
+
+//        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
     public WebDriver pickBrowser(String browser) throws MalformedURLException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         String gridURL = " http://192.168.1.218:4444";
