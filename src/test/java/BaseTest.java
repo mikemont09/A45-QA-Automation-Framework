@@ -51,6 +51,7 @@ public class BaseTest {
         driver = pickBrowser(browser);
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         actions = new Actions(driver);
+        url = BaseURL;
         driver.get(BaseURL);
     }
 
