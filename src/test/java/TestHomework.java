@@ -14,26 +14,26 @@ public class TestHomework extends BaseTest{
         clickSubmit();
         Thread.sleep(2000);
 
-        WebElement search = getDriver().findElement(By.cssSelector("[type='search']"));
+        WebElement search = getThreadLocal().findElement(By.cssSelector("[type='search']"));
         search.sendKeys("Pluto");
 
-        WebElement viewAll = getDriver().findElement(By.cssSelector("div.results h1 > button"));
+        WebElement viewAll = getThreadLocal().findElement(By.cssSelector("div.results h1 > button"));
         viewAll.click();
         Thread.sleep(2000);
 
-        WebElement firstSong = getDriver().findElement(By.cssSelector("section#songResultsWrapper td.title"));
+        WebElement firstSong = getThreadLocal().findElement(By.cssSelector("section#songResultsWrapper td.title"));
         firstSong.click();
         Thread.sleep(2000);
 
-        WebElement addToButton = getDriver().findElement(By.cssSelector("section#songResultsWrapper button.btn-add-to"));
+        WebElement addToButton = getThreadLocal().findElement(By.cssSelector("section#songResultsWrapper button.btn-add-to"));
         addToButton.click();
         Thread.sleep(1000);
 
         // search the playlist and click
-        WebElement playlist = getDriver().findElement(By.xpath("//section[@id='songResultsWrapper']//li[contains(text(),'kz-new playlist')]"));
+        WebElement playlist = getThreadLocal().findElement(By.xpath("//section[@id='songResultsWrapper']//li[contains(text(),'kz-new playlist')]"));
         playlist.click();
 
-        WebElement notif = getDriver().findElement(By.cssSelector("div.success.show"));
+        WebElement notif = getThreadLocal().findElement(By.cssSelector("div.success.show"));
         Assert.assertEquals(notif.getText(), "Added 1 song into \"kz-new playlist.\"");
     }
 }

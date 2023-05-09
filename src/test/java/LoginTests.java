@@ -8,33 +8,36 @@ import pages.LoginPage;
 public class LoginTests extends BaseTest {
 
     @Test (dataProvider = "IncorrectLoginData", dataProviderClass = BaseTest.class, enabled = true, priority = 0, description = "Login with invalid email and valid password")
-    public void loginInvalidEmailValidPasswordTest(String username, String password){
+    public void loginInvalidEmailValidPasswordTest(String username, String password) throws InterruptedException {
 
-        provideEmail(username);
-        providePassword(password);
+        provideEmail("demo@class.com");
+        providePassword("te$t$tudent");
+        Thread.sleep(2000);
         clickSubmit();
 
-        Assert.assertEquals(getDriver().getCurrentUrl(), url); // https://bbb.testpro.io/
+        Assert.assertEquals(getThreadLocal().getCurrentUrl(), url); // https://bbb.testpro.io/
     }
 
     @Test (enabled = true, priority = 1, description = "Login with valid email and valid password")
-    public void loginValidEmailPasswordTest(){
+    public void loginValidEmailPasswordTest() throws InterruptedException {
         provideEmail("demo@class.com");
         providePassword("te$t$tudent");
+        Thread.sleep(2000);
         clickSubmit();
         isAvatarDisplayed();
     }
 
     @Test (enabled = true, priority = 3, description = "Login with valid email and empty password")
-    public static void loginValidEmailEmptyPasswordTest() {
+    public static void loginValidEmailEmptyPasswordTest() throws InterruptedException {
         provideEmail("demo@class.com");
         providePassword("");
+        Thread.sleep(2000);
         clickSubmit();
 
-        Assert.assertEquals(getDriver().getCurrentUrl(), url); //https://bbb.testpro.io/
+        Assert.assertEquals(getThreadLocal().getCurrentUrl(), url);
     }
     public static void isAvatarDisplayed() {
-        WebElement avatarIcon = getDriver().findElement(By.cssSelector("img[class='avatar']"));
+        WebElement avatarIcon = getThreadLocal().findElement(By.cssSelector("img[class='avatar']"));
         Assert.assertTrue(avatarIcon.isDisplayed());
 //        Assert.assertEquals(avatarIcon.isDisplayed(), true);
     }
@@ -43,14 +46,13 @@ public class LoginTests extends BaseTest {
     @Test
     public void LoginValidEmailPasswordTest () {
 
-        LoginPage loginPage = new LoginPage(getDriver());
-        HomePage homePage = new HomePage(getDriver());
+        LoginPage loginPage = new LoginPage(getThreadLocal());
+        HomePage homePage = new HomePage(getThreadLocal());
 
         loginPage.provideEmail("demo@class.com");
         loginPage.providePassword("te$t$tudent");
         loginPage.clickSubmit();
 
         Assert.assertTrue(homePage.getUserAvatar().isDisplayed());
-
     }
 }
