@@ -89,8 +89,8 @@ public class BaseTest {
 //        navigateToPage();
     }
     public WebDriver lambdaTest() throws MalformedURLException {
-        String username = "";
-        String authkey = "";
+        String username = "monty133";
+        String authkey = "nCn2L7bSCCQs89LjxFtmAH2xjY2cFaUjB8SVi138A4oXG6pBal";
         String hub = "@hub.lambdatest.com/wd/hub";
 
         DesiredCapabilities caps = new DesiredCapabilities();
