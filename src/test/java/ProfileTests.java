@@ -22,7 +22,7 @@ public class ProfileTests extends BaseTest {
         clickSaveButton();
 
         Thread.sleep(2000);
-        WebElement actualProfileName = driver.findElement(By.cssSelector("a.view-profile>span"));
+        WebElement actualProfileName = getDriver().findElement(By.cssSelector("a.view-profile>span"));
         Assert.assertEquals(actualProfileName.getText(), randomName);
     }
 }

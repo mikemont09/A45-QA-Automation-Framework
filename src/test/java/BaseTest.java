@@ -16,7 +16,9 @@ import org.testng.annotations.*;
 
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URL;
 import java.time.Duration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,6 +27,7 @@ public class BaseTest {
     public static WebDriverWait wait = null;
     public static Actions actions = null;
     public static String url = "";
+    public static ThreadLocal<WebDriver> threadDriver;
 
     @BeforeSuite
     static void setupClass() {
@@ -54,16 +57,40 @@ public class BaseTest {
 //        driver = new FirefoxDriver();
 
         driver = pickBrowser(System.getProperty("browser"));
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        actions = new Actions(driver);
+        threadDriver = new ThreadLocal<>();
+        threadDriver.set(driver);
+
+        getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
+        actions = new Actions(getDriver());
         url = BaseURL;
+        getDriver().get(BaseURL);
         navigateToPage();
+    }
+    public static WebDriver lambdaTest() throws MalformedURLException {
+        String hubURL = "https://hub.lambdatest.com/wd/hub";
+
+        ChromeOptions browserOptions = new ChromeOptions();
+        browserOptions.setPlatformName("Windows 10");
+        browserOptions.setBrowserVersion("113.0");
+        HashMap<String, Object> ltOptions = new HashMap<String, Object>();
+        ltOptions.put("username", "monty133");
+        ltOptions.put("accessKey", "nCn2L7bSCCQs89LjxFtmAH2xjY2cFaUjB8SVi138A4oXG6pBal");
+        ltOptions.put("project", "Test Project");
+        ltOptions.put("selenium_version", "4.0.0");
+        ltOptions.put("w3c", true);
+        browserOptions.setCapability("LT:Options", ltOptions);
+
+        return new RemoteWebDriver(new URL(hubURL), browserOptions);
     }
 
     @AfterMethod//(enabled = false)
     public void closeBrowser() {
-        driver.quit();
+        getDriver().quit();
+        threadDriver.remove();
+    }
+    public static WebDriver getDriver(){
+        return threadDriver.get();
     }
 
     public static WebDriver pickBrowser(String browser) throws MalformedURLException {
@@ -86,6 +113,8 @@ public class BaseTest {
             case "grid-edge":
                 caps.setCapability("browserName", "MicrosoftEdge");
                 return driver = new RemoteWebDriver(URI.create(gridURL).toURL(), caps);
+            case "cloud":
+                return lambdaTest();
             default:
                 WebDriverManager.chromedriver().setup();
                 ChromeOptions options = new ChromeOptions();
@@ -95,7 +124,7 @@ public class BaseTest {
     }
 
     public static void navigateToPage() {
-        driver.get(url);
+        getDriver().get(url);
     }
 
     public static void provideEmail(String email) {
@@ -143,7 +172,7 @@ public class BaseTest {
 
     // hover
     public void hoverPlay() {
-        WebElement play = driver.findElement(By.cssSelector("[data-testid='play-btn']"));
+        WebElement play = getDriver().findElement(By.cssSelector("[data-testid='play-btn']"));
         // move to element
         actions.moveToElement(play).perform();
     }
@@ -151,12 +180,12 @@ public class BaseTest {
     // context click
     public void chooseAllSongsList() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("li a.songs")));
-        driver.findElement(By.cssSelector("li a.songs")).click();
+        getDriver().findElement(By.cssSelector("li a.songs")).click();
     }
 
     public void contextClickFirstSong(){
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".all-songs tr.song-item:nth-child(1)")));
-        WebElement firstSong = driver.findElement(By.cssSelector(".all-songs tr.song-item:nth-child(1)"));
+        WebElement firstSong = getDriver().findElement(By.cssSelector(".all-songs tr.song-item:nth-child(1)"));
         // context click
         actions.contextClick(firstSong).perform();
     }
@@ -165,7 +194,7 @@ public class BaseTest {
         chooseAllSongsList();
     //add assertion
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".all-songs tr.song-item")));
-        List<WebElement> songsList = driver.findElements(By.cssSelector(".all-songs tr.song-item"));
+        List<WebElement> songsList = getDriver().findElements(By.cssSelector(".all-songs tr.song-item"));
         Assert.assertEquals(songsList.size(), 63);
     }
 
@@ -173,7 +202,7 @@ public class BaseTest {
     public void doubleClickChoosePlaylist() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".playlist:nth-child(3)")));
         // double click
-        WebElement playlist = driver.findElement(By.cssSelector(".playlist:nth-child(3)"));
+        WebElement playlist = getDriver().findElement(By.cssSelector(".playlist:nth-child(3)"));
         actions.doubleClick(playlist).perform();
     }
 }

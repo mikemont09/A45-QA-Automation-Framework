@@ -14,7 +14,7 @@ public class LoginTests extends BaseTest {
         providePassword(password);
         clickSubmit();
 
-        Assert.assertEquals(driver.getCurrentUrl(), url); // https://bbb.testpro.io/
+        Assert.assertEquals(getDriver().getCurrentUrl(), url); // https://bbb.testpro.io/
     }
 
     @Test (enabled = true, priority = 1, description = "Login with valid email and valid password")
@@ -31,10 +31,10 @@ public class LoginTests extends BaseTest {
         providePassword("");
         clickSubmit();
 
-        Assert.assertEquals(driver.getCurrentUrl(), url); //https://bbb.testpro.io/
+        Assert.assertEquals(getDriver().getCurrentUrl(), url); //https://bbb.testpro.io/
     }
     public static void isAvatarDisplayed() {
-        WebElement avatarIcon = driver.findElement(By.cssSelector("img[class='avatar']"));
+        WebElement avatarIcon = getDriver().findElement(By.cssSelector("img[class='avatar']"));
         Assert.assertTrue(avatarIcon.isDisplayed());
 //        Assert.assertEquals(avatarIcon.isDisplayed(), true);
     }
@@ -43,8 +43,8 @@ public class LoginTests extends BaseTest {
     @Test
     public void LoginValidEmailPasswordTest () {
 
-        LoginPage loginPage = new LoginPage(driver);
-        HomePage homePage = new HomePage(driver);
+        LoginPage loginPage = new LoginPage(getDriver());
+        HomePage homePage = new HomePage(getDriver());
 
         loginPage.provideEmail("demo@class.com");
         loginPage.providePassword("te$t$tudent");
