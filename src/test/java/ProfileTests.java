@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 public class ProfileTests extends BaseTest {
 
     @Test
-    public static void changeProfileNameTest () throws InterruptedException {
+    public void changeProfileNameTest () throws InterruptedException {
 
         provideEmail("demo@class.com");
         providePassword("te$t$tudent");

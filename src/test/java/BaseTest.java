@@ -11,7 +11,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.*;
@@ -20,21 +19,20 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.time.Duration;
-import java.time.Instant;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
 public class BaseTest {
-    private static final ThreadLocal<WebDriver> THREAD_LOCAL = new ThreadLocal<>();
-    public static String url = "https://bbb.testpro.io/";
-    private WebDriver driver;
+//    private static final ThreadLocal<WebDriver> THREAD_LOCAL = new ThreadLocal<>();
+
+    public  ThreadLocal<WebDriver> THREAD_LOCAL = null;
+    public  String url = "https://bbb.testpro.io/";
+    private static String email;
+    private WebDriver driver = null;
     public Actions actions;
     static WebDriverWait wait;
 
-    public static WebDriver getThreadLocal() {
-        return THREAD_LOCAL.get();
-    }
+
 
     @BeforeSuite
     static void setupClass() {
@@ -53,12 +51,21 @@ public class BaseTest {
                 {"", ""}
         };
     }
+
+    public WebDriver getThreadLocal() {
+        return THREAD_LOCAL.get();
+    }
     @BeforeMethod
     public void setUpBrowser(@Optional String baseURL) throws MalformedURLException{
-        THREAD_LOCAL.set(pickBrowser("browser"));
-        THREAD_LOCAL.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-        THREAD_LOCAL.get().manage().window().maximize();
-        THREAD_LOCAL.get().manage().deleteAllCookies();
+        THREAD_LOCAL = new ThreadLocal<>();
+        driver = pickBrowser(System.getProperty("browser"));
+        THREAD_LOCAL.set(driver);
+//        THREAD_LOCAL.set(pickBrowser("browser"));
+        wait = new WebDriverWait(getThreadLocal(),Duration.ofSeconds(10));
+        getThreadLocal().manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+        getThreadLocal().manage().window().maximize();
+        getThreadLocal().manage().deleteAllCookies();
+
         getThreadLocal().get(url);
         System.out.println("Browser setup by Thread " + Thread.currentThread().getId() + " and Driver reference is : " + getThreadLocal());
     }
@@ -79,7 +86,7 @@ public class BaseTest {
         //actions = new Actions(getDriver());
         url = BaseURL;
         getThreadLocal().get(BaseURL);
-        navigateToPage();
+//        navigateToPage();
     }
     public WebDriver lambdaTest() throws MalformedURLException {
         String username = "";
@@ -89,8 +96,8 @@ public class BaseTest {
         DesiredCapabilities caps = new DesiredCapabilities();
         caps.setCapability("platform", "Windows 10");
         caps.setCapability("browserName", "Chrome");
-        caps.setCapability("version", "110.0");
-        caps.setCapability("resolution", "1024x768");
+        caps.setCapability("version", "113.0");
+        caps.setCapability("resolution", "1920x1080");
         caps.setCapability("build", "TestNG With Java");
         caps.setCapability("name", this.getClass().getName());
         caps.setCapability("plugin", "git-testing");
@@ -98,7 +105,8 @@ public class BaseTest {
     }
     @AfterMethod
     public void closeBrowser() {
-        THREAD_LOCAL.get().close();
+//        THREAD_LOCAL.get().close();
+        getThreadLocal().quit();
         THREAD_LOCAL.remove();
     }
 
@@ -134,23 +142,23 @@ public class BaseTest {
         }
     }
 
-    public static void navigateToPage() {
-        getThreadLocal().get(url);
-    }
+//    public void navigateToPage() {
+//        getThreadLocal().get(url);
+//    }
 
-    public static void provideEmail(String email) {
+    public void provideEmail(String email) {
         WebElement emailField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[type='email']")));
         emailField.clear();
         emailField.sendKeys(email);
     }
 
-    public static void providePassword(String password) {
+    public void providePassword(String password) {
         WebElement passwordField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[type='password']")));
         passwordField.clear();
         passwordField.sendKeys(password);
     }
 
-    public static void clickSubmit() {
+    public void clickSubmit() {
         WebElement submit = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("button[type='submit']")));
         submit.click();
     }
