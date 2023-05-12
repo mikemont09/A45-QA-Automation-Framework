@@ -5,6 +5,7 @@ import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -20,10 +21,12 @@ import java.time.Duration;
 public class LoginStepDefinitions {
     WebDriver driver;
     WebDriverWait wait;
-    @Before
+//    @Before
     public void openBrowser(){
         WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--remote-allow-origins=*");
+        driver = new ChromeDriver(options);
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
     @After
@@ -39,11 +42,11 @@ public class LoginStepDefinitions {
         driver = new ChromeDriver(options);
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
-    @Given("I open Login Page")
+    @And("I open Login Page")
     public void openLoginPage(){
         driver.get("https://bbb.testpro.io");
     }
-    @Then("I enter email {string}")
+    @When("I enter email {string}")
     public void enterEmail(String email) {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.provideEmail(email);
